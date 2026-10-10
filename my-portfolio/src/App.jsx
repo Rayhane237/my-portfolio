@@ -12,7 +12,7 @@ const projects = [
     challenge: 'The most complex backend of the three, with the strongest authentication system — but business logic and deployment weren\u2019t holding up. Built first, so it carried unresolved issues into deployment.',
     fix: 'Came back to it last, after solving environment-variable and responsiveness issues on the other two projects, and applied those same lessons to stabilize its logic and deployment.',
     link: 'https://travalagency-eight.vercel.app/',
-    linkLabel: 'phenaTravels.app',
+    linkLabel: 'Visit Phnes Travels',
   },
   {
     tag: 'MVP · Recruitment Platform',
@@ -22,7 +22,7 @@ const projects = [
     challenge: 'Every screen was designed and tested responsively — mobile, tablet, desktop — and looked correct locally. Once deployed, the layout broke out of alignment on real devices.',
     fix: 'Rebuilt the responsive layer around fluid units and proper breakpoints instead of fixed local-only styling, then verified across actual deployed viewports.',
     link: 'https://autono-wep-application.vercel.app/',
-    linkLabel: 'autono.app',
+    linkLabel: 'Visit Autono',
   },
   {
     tag: 'E-Commerce',
@@ -32,7 +32,7 @@ const projects = [
     challenge: "Products displayed correctly locally but not on the live deploy — the frontend was still calling the local backend address, and since the API URL wasn't managed through environment variables, updating it after deploying the backend didn't take effect.",
     fix: 'Moved the API base URL into environment variables on both frontend and backend, redeployed with the correct production values, and confirmed the connection end-to-end.',
     link: 'https://ma-boutiqhe-frontend-pro-pn7e.vercel.app/laBoutique',
-    linkLabel: 'adeline.app',
+    linkLabel: 'Visit Adeline',
   },
 ]
 
@@ -92,12 +92,10 @@ function App() {
   const [navOpen, setNavOpen] = useState(false)
   const canvasRef = useRef(null)
   const nebulaRef = useRef(null)
-  const rootRefsSet = useRef(new Set())
 
   // close mobile nav on link click
   const closeNav = () => setNavOpen(false)
 
-  // nebula cursor glow, tracked via CSS custom properties on :root
   useEffect(() => {
     const root = document.documentElement
     const nebula = nebulaRef.current
@@ -243,9 +241,9 @@ function App() {
           <div className="coords">3RD YEAR CS · ENSK <em>·</em> MERN STACK <em>·</em> ALGIERS</div>
           <h1>Building web apps that feel as <span className="grad">weightless</span> as they work.</h1>
           <p className="hero-sub">
-            Full-stack developer working across the <b>MERN</b> stack — from data modeling to the last pixel of a checkout flow.
-            Three shipped products, each one an exercise in keeping architecture clean and interfaces out of the user's way.
-          </p>
+             Full-stack developer working across the <b>MERN</b> stack — from data modeling to the last pixel of a checkout flow.
+             Three shipped products, each one built on clean architecture and an interface that stays out of the user's way. Currently growing toward <b>SaaS and MVP development</b> for business management.
+         </p>
         </section>
 
         <section className="work" id="work">
@@ -271,11 +269,13 @@ function App() {
           <div className="about-grid">
             <div className="about-text reveal">
               <p><b>3rd-year Computer Science student at ENSK</b> (École Normale Supérieure de Kouba, Algeria), alongside a <b>Full Stack Web App Developer certification</b> from BrainerX (2025).</p>
-              <p>Focused on assembling clean, production-ready architecture rather than writing raw code for its own sake — connecting frontend and backend through well-structured REST APIs, and shipping to the cloud rather than leaving projects on localhost.</p>
+               <p>My goal is to grow into building <b>SaaS products and MVPs</b> that help businesses manage their operations, turning real needs into reliable, production-ready software. I treat code as a tool to solve problems: I focus on clean architecture, well-structured REST APIs, and dependable cloud deployments that hold up well beyond localhost.</p>
+              <p>Each of my projects taught me something a local setup never could: managing environment variables, making layouts responsive on real devices, and securing authentication. I'm now looking for an internship where I can apply this discipline within a team and keep growing.</p>
             </div>
             <div className="stack-list reveal">
               <div className="stack-item"><span className="label">Stack</span><span className="val">MongoDB · Express · React · Node</span></div>
-              <div className="stack-item"><span className="label">Database</span><span className="val">Modeling &amp; structuring</span></div>
+              <div className="stack-item"><span className="label">Direction</span><span className="val">SaaS &amp; MVPs for business management</span></div>
+              <div className="stack-item"><span className="label">Database</span><span className="val">MongoDb </span></div>
               <div className="stack-item"><span className="label">Integration</span><span className="val">REST API, frontend ↔ backend</span></div>
               <div className="stack-item"><span className="label">Deployment</span><span className="val">Cloud, production builds</span></div>
               <div className="stack-item"><span className="label">Certification</span><span className="val">BrainerX, 2025</span></div>
