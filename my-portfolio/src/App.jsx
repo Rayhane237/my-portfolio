@@ -1,101 +1,146 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
+import { FaWhatsapp, FaGithub, FaLinkedinIn } from 'react-icons/fa'
 import './App.css'
+
+const WHATSAPP = 'https://wa.me/213797955763'
 
 const projects = [
   {
-    tag: 'Travel · Flagship Project',
+    tag: 'Travel',
     title: 'Phnes Travels',
     featured: true,
-    stack: ['Customer App', 'Admin Dashboard', 'Shared Backend'],
-    media: 'https://images.unsplash.com/photo-1738682085346-6a6faff97fb1?auto=format&fit=crop&w=1200&q=70',
-    desc: 'A full-stack travel booking platform built as three cooperating apps sharing one backend: customers book flights and hotels, admins manage inventory and users through a role-based dashboard, and a shared Express/MongoDB API enforces public, customer and admin access tiers.',
-    challenge: 'The most complex backend of the three, with the strongest authentication system — but business logic and deployment weren\u2019t holding up. Built first, so it carried unresolved issues into deployment.',
-    fix: 'Came back to it last, after solving environment-variable and responsiveness issues on the other two projects, and applied those same lessons to stabilize its logic and deployment.',
+    desktop: 'https://res.cloudinary.com/n2czqwzg/image/upload/v1793038603/port6.webp',
+    mobile: 'https://res.cloudinary.com/n2czqwzg/image/upload/v1793038594/port7.webp',
+    chips: ['MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'Role-based access'],
+    problem:
+      'A travel agency needs one system for its customers and its staff, with different permissions for each.',
+    built:
+      'Three cooperating apps (customer app, admin dashboard and a shared backend) with public, customer and admin access enforced at the API level.',
+    hardest:
+      'stabilizing the business logic and deployment, using the lessons from the other two projects.',
     link: 'https://travalagency-eight.vercel.app/',
     linkLabel: 'Visit Phnes Travels',
   },
   {
-    tag: 'MVP · Recruitment Platform',
+    tag: 'Recruitment Platform · MVP',
     title: 'Autono',
-    media: 'https://images.unsplash.com/photo-1685984351618-f0c4287590b8?auto=format&fit=crop&w=1200&q=70',
-    desc: 'Connects specialized AI/tech engineers with autonomous-vehicle companies — full MERN build with role-based matching flows and structured data models on both sides of the marketplace.',
-    challenge: 'Every screen was designed and tested responsively — mobile, tablet, desktop — and looked correct locally. Once deployed, the layout broke out of alignment on real devices.',
-    fix: 'Rebuilt the responsive layer around fluid units and proper breakpoints instead of fixed local-only styling, then verified across actual deployed viewports.',
+    desktop: 'https://res.cloudinary.com/n2czqwzg/image/upload/v1793038612/port5.webp',
+    mobile: 'https://res.cloudinary.com/n2czqwzg/image/upload/v1793038718/PORT10.webp',
+    chips: ['MongoDB', 'Express', 'React', 'Node.js', 'REST API'],
+    problem:
+      'AI and tech engineers and autonomous-vehicle companies need a way to find each other with relevant, structured information.',
+    built:
+      'A full MERN marketplace with role-based matching flows and structured data models for both sides.',
+    hardest:
+      'the layout broke on real devices after deployment, so I rebuilt it with fluid units and proper breakpoints.',
     link: 'https://autono-wep-application.vercel.app/',
     linkLabel: 'Visit Autono',
   },
   {
     tag: 'E-Commerce',
     title: 'Adeline',
-    media: 'https://images.unsplash.com/photo-1778996525689-cbbbc33a5185?auto=format&fit=crop&w=1200&q=70',
-    desc: 'A functioning MERN storefront — dynamic catalog, cart and checkout — built as the reference implementation for the stack, from database schema to deployment.',
-    challenge: "Products displayed correctly locally but not on the live deploy — the frontend was still calling the local backend address, and since the API URL wasn't managed through environment variables, updating it after deploying the backend didn't take effect.",
-    fix: 'Moved the API base URL into environment variables on both frontend and backend, redeployed with the correct production values, and confirmed the connection end-to-end.',
+    desktop: 'https://res.cloudinary.com/n2czqwzg/image/upload/v1793038581/port8.webp',
+    mobile: 'https://res.cloudinary.com/n2czqwzg/image/upload/v1793038654/port3.jpg',
+    chips: ['MongoDB', 'Express', 'React', 'Node.js'],
+    problem:
+      'Small brands need an online store they control, without being locked into a template.',
+    built:
+      'A working storefront with dynamic catalog, cart and checkout, from database schema to production deployment.',
+    hardest:
+      'the live site still called the local backend, so I moved the API URL into environment variables.',
     link: 'https://ma-boutiqhe-frontend-pro-pn7e.vercel.app/laBoutique',
     linkLabel: 'Visit Adeline',
   },
 ]
 
+const stackRows = [
+  ['Stack', 'MongoDB · Express · React · Node'],
+  ['Direction', 'SaaS & MVPs for business management'],
+  ['Database', 'MongoDB'],
+  ['Integration', 'REST API, frontend ↔ backend'],
+  ['Deployment', 'Vercel, cloud-hosted backend'],
+  ['Certification', 'BrainerX, 2025'],
+]
+
 function ProjectCard({ project }) {
-  const [open, setOpen] = useState(false)
   const cardRef = useRef(null)
 
   const handleMouseMove = (e) => {
     const el = cardRef.current
     if (!el) return
     const r = el.getBoundingClientRect()
-    el.style.setProperty('--px', ((e.clientX - r.left) / r.width * 100) + '%')
-    el.style.setProperty('--py', ((e.clientY - r.top) / r.height * 100) + '%')
+    el.style.setProperty('--px', ((e.clientX - r.left) / r.width) * 100 + '%')
+    el.style.setProperty('--py', ((e.clientY - r.top) / r.height) * 100 + '%')
   }
 
   return (
     <div
       ref={cardRef}
-      className={`card reveal${open ? ' open' : ''}${project.featured ? ' featured' : ''}`}
+      className={`card reveal${project.featured ? ' featured' : ''}`}
       onMouseMove={handleMouseMove}
     >
       {project.featured && <span className="featured-badge">★ Flagship</span>}
-      <div className="card-media" style={{ backgroundImage: `url('${project.media}')` }} />
-      <div className="tag"><span className="dot"></span>{project.tag}</div>
-      <h3>{project.title}</h3>
-      {project.stack && (
-        <div className="stack-chips">
-          {project.stack.map((s) => (
-            <span className="chip" key={s}>{s}</span>
-          ))}
-        </div>
-      )}
-      <p>{project.desc}</p>
-      <button type="button" className="challenge-toggle" onClick={() => setOpen((o) => !o)}>
-        Show the challenge <span className="chev">▾</span>
-      </button>
-      <div className="challenge-panel">
-        <div className="challenge-panel-inner">
-          <div className="challenge-block">
-            <span className="k">Challenge</span>
-            <p>{project.challenge}</p>
+
+      <div className="card-media">
+        <div className="devices">
+          <div className="laptop">
+            <div className="laptop-bar">
+              <span></span><span></span><span></span>
+            </div>
+            <img
+              src={project.desktop}
+              alt={`${project.title} on desktop`}
+              loading="lazy"
+            />
           </div>
-          <div className="challenge-block">
-            <span className="k">Fix</span>
-            <p>{project.fix}</p>
+          <div className="phone">
+            <div className="phone-screen">
+              <img
+                src={project.mobile}
+                alt={`${project.title} on mobile`}
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </div>
-      <a className="link-row" href={project.link} target="_blank" rel="noopener noreferrer">
-        {project.linkLabel} <span className="arrow">↗</span>
-      </a>
+
+      <div className="card-body">
+        <div className="tag"><span className="dot"></span>{project.tag}</div>
+        <h3>{project.title}</h3>
+
+        <div className="stack-chips">
+          {project.chips.map((c) => (
+            <span className="chip" key={c}>{c}</span>
+          ))}
+        </div>
+
+        <div className="info">
+          <span className="k">The problem</span>
+          <p>{project.problem}</p>
+        </div>
+        <div className="info">
+          <span className="k">What I built</span>
+          <p>{project.built}</p>
+        </div>
+
+        <p className="hardest">
+          <b>Hardest part:</b> {project.hardest}
+        </p>
+
+        <a className="link-row" href={project.link} target="_blank" rel="noopener noreferrer">
+          {project.linkLabel} <span className="arrow">↗</span>
+        </a>
+      </div>
     </div>
   )
 }
 
 function App() {
-  const [navOpen, setNavOpen] = useState(false)
   const canvasRef = useRef(null)
   const nebulaRef = useRef(null)
 
-  // close mobile nav on link click
-  const closeNav = () => setNavOpen(false)
-
+  // cursor glow
   useEffect(() => {
     const root = document.documentElement
     const nebula = nebulaRef.current
@@ -118,11 +163,14 @@ function App() {
   // scroll reveal
   useEffect(() => {
     const els = document.querySelectorAll('.reveal')
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.setAttribute('data-revealed', 'true')
-      })
-    }, { threshold: 0.15 })
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.setAttribute('data-revealed', 'true')
+        })
+      },
+      { threshold: 0.15 }
+    )
     els.forEach((el) => io.observe(el))
     return () => io.disconnect()
   }, [])
@@ -162,9 +210,13 @@ function App() {
 
     function maybeSpawnShootingStar() {
       if (Math.random() < 0.004 && shooting.length < 2) {
-        const startX = Math.random() * w * 0.6
-        const startY = Math.random() * h * 0.3
-        shooting.push({ x: startX, y: startY, len: 80 + Math.random() * 60, speed: 8 + Math.random() * 4, life: 1 })
+        shooting.push({
+          x: Math.random() * w * 0.6,
+          y: Math.random() * h * 0.3,
+          len: 80 + Math.random() * 60,
+          speed: 8 + Math.random() * 4,
+          life: 1,
+        })
       }
     }
 
@@ -174,7 +226,9 @@ function App() {
       const py = (mouseY - 0.5) * 14
 
       for (const s of stars) {
-        const twinkle = reducedMotion ? s.baseAlpha : s.baseAlpha + Math.sin(t * 0.001 * s.speed * 40 + s.phase) * 0.2
+        const twinkle = reducedMotion
+          ? s.baseAlpha
+          : s.baseAlpha + Math.sin(t * 0.001 * s.speed * 40 + s.phase) * 0.2
         ctx.beginPath()
         ctx.fillStyle = `rgba(230,222,255,${Math.max(0, Math.min(1, twinkle))})`
         ctx.arc(s.x + px * s.depth, s.y + py * s.depth, s.r, 0, Math.PI * 2)
@@ -222,28 +276,37 @@ function App() {
       <main>
         <nav>
           <div className="logo">Tliba Rayhane<span>.</span></div>
-          <div className={`nav-links${navOpen ? ' open' : ''}`}>
-            <a href="https://wa.me/213797955763" target="_blank" rel="noopener noreferrer" onClick={closeNav}>WhatsApp</a>
-            <a href="https://github.com/Rayhane237" target="_blank" rel="noopener noreferrer" onClick={closeNav}>GitHub</a>
-            <a href="https://www.linkedin.com/in/rayhane-tliba-765982358/" target="_blank" rel="noopener noreferrer" onClick={closeNav}>LinkedIn</a>
+          <div className="nav-links">
+            <a className="pill pill-wa" href={WHATSAPP} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <FaWhatsapp /> <span className="pill-label">WhatsApp</span>
+            </a>
+            <a className="pill pill-gh" href="https://github.com/Rayhane237" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <FaGithub /> <span className="pill-label">GitHub</span>
+            </a>
+            <a className="pill pill-li" href="https://www.linkedin.com/in/rayhane-tliba-765982358/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <FaLinkedinIn /> <span className="pill-label">LinkedIn</span>
+            </a>
           </div>
-          <button
-            className={`nav-toggle${navOpen ? ' open' : ''}`}
-            aria-label="Toggle menu"
-            aria-expanded={navOpen}
-            onClick={() => setNavOpen((o) => !o)}
-          >
-            <span></span><span></span><span></span>
-          </button>
         </nav>
 
         <section className="hero">
-          <div className="coords">3RD YEAR CS · ENSK <em>·</em> MERN STACK <em>·</em> ALGIERS</div>
-          <h1>Building web apps that feel as <span className="grad">weightless</span> as they work.</h1>
+          <div className="coords">
+            FULL-STACK MERN DEVELOPER <em>·</em> ALGIERS <em>·</em> OPEN TO INTERNSHIPS
+          </div>
+          <h1>
+            I build secure web apps for businesses:{' '}
+            <span className="grad">booking systems, dashboards and e-commerce.</span>
+          </h1>
           <p className="hero-sub">
-             Full-stack developer working across the <b>MERN</b> stack — from data modeling to the last pixel of a checkout flow.
-             Three shipped products, each one built on clean architecture and an interface that stays out of the user's way. Currently growing toward <b>SaaS and MVP development</b> for business management.
-         </p>
+            From database to deployment, with role-based access and production builds.{' '}
+            <b>Three deployed products</b>, each solving a real business problem.
+          </p>
+          <div className="hero-actions">
+            <a className="btn btn-primary" href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+              Let's talk
+            </a>
+            <a className="btn btn-ghost" href="#work">View projects</a>
+          </div>
         </section>
 
         <section className="work" id="work">
@@ -268,17 +331,31 @@ function App() {
           </div>
           <div className="about-grid">
             <div className="about-text reveal">
-              <p><b>3rd-year Computer Science student at ENSK</b> (École Normale Supérieure de Kouba, Algeria), alongside a <b>Full Stack Web App Developer certification</b> from BrainerX (2025).</p>
-               <p>My goal is to grow into building <b>SaaS products and MVPs</b> that help businesses manage their operations, turning real needs into reliable, production-ready software. I treat code as a tool to solve problems: I focus on clean architecture, well-structured REST APIs, and dependable cloud deployments that hold up well beyond localhost.</p>
-              <p>Each of my projects taught me something a local setup never could: managing environment variables, making layouts responsive on real devices, and securing authentication. I'm now looking for an internship where I can apply this discipline within a team and keep growing.</p>
+              <p>
+                Full-stack developer with a <b>Full Stack Web App Developer certification</b> from
+                BrainerX (2025).
+              </p>
+              <p>
+                My goal is to grow into building <b>SaaS products and MVPs</b> that help businesses
+                manage their operations, turning real needs into reliable, production-ready software.
+                I treat code as a tool to solve problems: I focus on clean architecture,
+                well-structured REST APIs, and dependable cloud deployments that hold up well beyond
+                localhost.
+              </p>
+              <p>
+                Each of my projects taught me something a local setup never could: managing
+                environment variables, making layouts responsive on real devices, and securing
+                authentication. I'm now looking for an internship where I can apply this discipline
+                within a team and keep growing.
+              </p>
             </div>
             <div className="stack-list reveal">
-              <div className="stack-item"><span className="label">Stack</span><span className="val">MongoDB · Express · React · Node</span></div>
-              <div className="stack-item"><span className="label">Direction</span><span className="val">SaaS &amp; MVPs for business management</span></div>
-              <div className="stack-item"><span className="label">Database</span><span className="val">MongoDb </span></div>
-              <div className="stack-item"><span className="label">Integration</span><span className="val">REST API, frontend ↔ backend</span></div>
-              <div className="stack-item"><span className="label">Deployment</span><span className="val">Cloud, production builds</span></div>
-              <div className="stack-item"><span className="label">Certification</span><span className="val">BrainerX, 2025</span></div>
+              {stackRows.map(([label, val]) => (
+                <div className="stack-item" key={label}>
+                  <span className="label">{label}</span>
+                  <span className="val">{val}</span>
+                </div>
+              ))}
             </div>
           </div>
         </section>
